@@ -4,7 +4,8 @@
   "description": "Template Repo for Standard Projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "watch": "jest --watch *.js",
     "dev": "webpack serve",
     "build": "webpack",
     "deploy": "git subtree push --prefix dist origin gh-pages"
