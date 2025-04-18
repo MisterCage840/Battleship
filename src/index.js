@@ -37,7 +37,7 @@ const player2cells = player2GameBoard.getGameboard();
 
 const frank = ship("frank", 3);
 const john = ship("john", 2);
-const benjamin = ship("benjamin", 4);
+const benjamin = ship("benj", 4);
 
 const ahmad = ship("ahmad", 3);
 const abuAli = ship("abuAli", 2);
@@ -56,10 +56,14 @@ const renderGameboard = (gameboardGrid, gameboardcells) => {
   for (let i = 0; i < gameboardcells.length; i++)
     for (let j = 0; j < gameboardcells[i].length; j++) {
       const div = document.createElement("div");
+      if (gameboardcells[i][j] != null && gameboardcells[i][j] != "X")
+        div.classList.add("shipCell");
       div.classList.add("cell");
-      div.textContent = gameboardcells[i][j];
+      // div.textContent = gameboardcells[i][j];
       div.dataset.row = i;
       div.dataset.col = j;
+      if (gameboardcells[i][j] == "X") div.classList.add("missCell");
+      if (gameboardcells[i][j] == "hit") div.classList.add("hitCell");
       gameboardGrid.appendChild(div);
     }
 };
@@ -91,17 +95,19 @@ const randomAttack = (gameboard) => {
 };
 
 p2gameboardGrid.addEventListener("click", (e) => {
-  const row = e.target.dataset.row;
-  const col = e.target.dataset.col;
+  const row = parseInt(e.target.dataset.row);
+  const col = parseInt(e.target.dataset.col);
+  if (isNaN(row) || isNaN(col)) return; // in case click is on the gap
+  if (player2cells[row][col] != "X") {
+    player2GameBoard.receiveAttack(row, col);
+    renderGameboard(p2gameboardGrid, player2cells);
+    toggleGameTurn();
 
-  player2GameBoard.receiveAttack(row, col);
-  renderGameboard(p2gameboardGrid, player2cells);
-  toggleGameTurn();
+    randomAttack(player1GameBoard);
+    renderGameboard(p1gameboardGrid, player1cells);
 
-  randomAttack(player1GameBoard);
-  renderGameboard(p1gameboardGrid, player1cells);
-
-  toggleGameTurn();
+    toggleGameTurn();
+  }
 
   if (player1GameBoard.checkShips() || player2GameBoard.checkShips()) {
     p1gameboardGrid.style.pointerEvents = "none";

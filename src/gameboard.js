@@ -37,7 +37,7 @@ const gameboard = () => {
 
   const receiveAttack = (x, y) => {
     console.log(x + " " + y);
-    if (gamecells[x][y] == null) gamecells[x][y] = "miss";
+    if (gamecells[x][y] == null) gamecells[x][y] = "X";
     else if (gamecells[x][y] == "hit") {
     } else {
       shipObjects.forEach((ship) => {
