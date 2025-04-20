@@ -9,11 +9,52 @@
     <script src="index.js" defer></script>
   </head>
   <body>
-    <h1 class="gameTitle">Battleship</h1>
+    <h1 class="gameTitle">
+      <img src="./battleship.png" alt="" />Battleship<img
+        src="./battleship.png"
+        alt=""
+      />
+    </h1>
     <div class="gameboardContainer">
       <div class="p1gameboardGrid"></div>
       <div class="p2gameboardGrid"></div>
     </div>
     <div class="winnerDiv"></div>
+    <div class="howToPlay">
+      <h1>How to Play:</h1>
+      <p class="firstPoint">
+        1. Take Turns Attacking Players: Take turns selecting a grid cell to
+        "fire" at the opponent's board. Click a cell to attack it.
+        <img src="./target.png" alt="" />
+      </p>
+      <p class="secondPoint">
+        2. Hits and Misses: If you hit a ship, it's marked on the grid with a
+        <img src="./hitX.png" alt="" /> If you miss, it's marked with an
+        <img src="./letterX.png" alt="" />
+      </p>
+      <p class="randomPoint">
+        3. Bonus Turn on Hit: If you hit a ship, you get to take another turn
+        immediately.
+        <img src="./bullseye.png" alt="" />
+      </p>
+      <p class="thirdPoint">
+        4. Sinking Ships A ship is sunk when all of its parts are hit. Keep
+        track of your hits!
+        <img src="./sinking.png" alt="" />
+      </p>
+      <p class="fourthPoint">
+        5. Winning the Game: The first player to sink all of the opponent’s
+        ships wins the game.
+        <img src="./trophy.png" alt="" />
+      </p>
+    </div>
   </body>
+  <footer>
+    <p>
+      <a href="https://github.com/MisterCage840"
+        ><img src="./github.png" alt=""
+      /></a>
+      Created by ©MisterCage840 2025
+    </p>
+  </footer>
 </html>

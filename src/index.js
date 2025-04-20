@@ -38,18 +38,22 @@ const player2cells = player2GameBoard.getGameboard();
 const frank = ship("frank", 3);
 const john = ship("john", 2);
 const benjamin = ship("benj", 4);
+const marcen = ship("marcin", 5);
 
 const ahmad = ship("ahmad", 3);
 const abuAli = ship("abuAli", 2);
 const omar = ship("omar", 4);
+const aniq = ship("aniq", 5);
 
 player1GameBoard.placeShip(frank);
 player1GameBoard.placeShip(john);
 player1GameBoard.placeShip(benjamin);
+player1GameBoard.placeShip(marcen);
 
 player2GameBoard.placeShip(ahmad);
 player2GameBoard.placeShip(abuAli);
 player2GameBoard.placeShip(omar);
+player2GameBoard.placeShip(aniq);
 
 const renderGameboard = (gameboardGrid, gameboardcells) => {
   gameboardGrid.innerHTML = "";
@@ -68,8 +72,25 @@ const renderGameboard = (gameboardGrid, gameboardcells) => {
     }
 };
 
+const renderComputerGameboard = (gameboardGrid, gameboardcells) => {
+  gameboardGrid.innerHTML = "";
+  for (let i = 0; i < gameboardcells.length; i++)
+    for (let j = 0; j < gameboardcells[i].length; j++) {
+      const div = document.createElement("div");
+      // if (gameboardcells[i][j] != null && gameboardcells[i][j] != "X")
+      //   div.classList.add("shipCell");
+      div.classList.add("cell");
+      // div.textContent = gameboardcells[i][j];
+      div.dataset.row = i;
+      div.dataset.col = j;
+      if (gameboardcells[i][j] == "X") div.classList.add("missCell");
+      if (gameboardcells[i][j] == "hit") div.classList.add("hitCell");
+      gameboardGrid.appendChild(div);
+    }
+};
+
 renderGameboard(p1gameboardGrid, player1cells);
-renderGameboard(p2gameboardGrid, player2cells);
+renderComputerGameboard(p2gameboardGrid, player2cells);
 
 // p1gameboardGrid.addEventListener("click", (e) => {
 //   const row = e.target.dataset.row;
@@ -92,21 +113,36 @@ const randomAttack = (gameboard) => {
   computerAttacks.push(r1r2);
 
   gameboard.receiveAttack(randomNumber1, randomNumber2);
+  return r1r2;
 };
 
 p2gameboardGrid.addEventListener("click", (e) => {
   const row = parseInt(e.target.dataset.row);
   const col = parseInt(e.target.dataset.col);
   if (isNaN(row) || isNaN(col)) return; // in case click is on the gap
-  if (player2cells[row][col] != "X") {
+
+  if (player2cells[row][col] != "X" && player2cells[row][col] != "hit") {
     player2GameBoard.receiveAttack(row, col);
-    renderGameboard(p2gameboardGrid, player2cells);
-    toggleGameTurn();
+    if (player2cells[row][col] == "hit") {
+      renderComputerGameboard(p2gameboardGrid, player2cells);
+      renderGameboard(p1gameboardGrid, player1cells);
+    } else {
+      renderComputerGameboard(p2gameboardGrid, player2cells);
+      toggleGameTurn();
 
-    randomAttack(player1GameBoard);
-    renderGameboard(p1gameboardGrid, player1cells);
+      const random = randomAttack(player1GameBoard).split("");
+      let pcRow = random[1];
+      let pcCol = random[2];
+      console.log(player1cells[pcRow][pcCol]);
+      if (player1cells[random[1]][random[2]] == "hit") {
+        const randomattack = randomAttack(player1GameBoard).split("");
+        renderGameboard(p1gameboardGrid, player1cells);
+      } else {
+        renderGameboard(p1gameboardGrid, player1cells);
 
-    toggleGameTurn();
+        toggleGameTurn();
+      }
+    }
   }
 
   if (player1GameBoard.checkShips() || player2GameBoard.checkShips()) {
