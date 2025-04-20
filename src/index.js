@@ -130,18 +130,16 @@ p2gameboardGrid.addEventListener("click", (e) => {
       renderComputerGameboard(p2gameboardGrid, player2cells);
       toggleGameTurn();
 
-      const random = randomAttack(player1GameBoard).split("");
-      let pcRow = random[1];
-      let pcCol = random[2];
-      console.log(player1cells[pcRow][pcCol]);
-      if (player1cells[random[1]][random[2]] == "hit") {
-        const randomattack = randomAttack(player1GameBoard).split("");
-        renderGameboard(p1gameboardGrid, player1cells);
-      } else {
-        renderGameboard(p1gameboardGrid, player1cells);
+      let random = randomAttack(player1GameBoard).split("");
 
-        toggleGameTurn();
+      while (player1cells[random[0]][random[1]] == "hit") {
+        random = randomAttack(player1GameBoard).split("");
+        renderGameboard(p1gameboardGrid, player1cells);
       }
+
+      renderGameboard(p1gameboardGrid, player1cells);
+
+      toggleGameTurn();
     }
   }
 
