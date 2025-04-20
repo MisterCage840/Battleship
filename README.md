@@ -24,5 +24,6 @@ A browser-based implementation of the classic Battleship game using JavaScript, 
 - HTML
 - CSS
 - JavaScript (ES6)
+- Jest (Test Driven Development)  
 
 - ![image](https://github.com/user-attachments/assets/90f8da27-19c7-4ff2-9c11-d4e365025770)
